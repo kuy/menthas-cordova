@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { Router, IndexRoute, Route, Redirect, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import App from './app';
-import Top from './pages/top';
+import News from './pages/news';
 import About from './pages/about';
 import store from './store';
 
@@ -17,8 +17,9 @@ document.addEventListener('deviceready', () => {
   ReactDOM.render(
     <Provider store={store}>
       <Router history={history}>
+        <Redirect from="/" to="/categories/top" />
         <Route path="/" component={App}>
-          <IndexRoute component={Top} />
+          <Route path="categories/:name" component={News} />
           <Route path="about" component={About} />
 
           {/* NOTE: Required to accept Cordova's default URL */}

@@ -22,6 +22,7 @@ class App extends Component {
 
   render() {
     const { drawer } = this.props.app;
+    const { names } = this.props.categories;
     return (
       <div>
         {this.props.children}
@@ -30,7 +31,10 @@ class App extends Component {
           open={drawer}
           onRequestChange={this.handleChange.bind(this)}
         >
-          <MenuItem onTouchTap={() => this.handleMove('/')}>Top</MenuItem>
+          <MenuItem onTouchTap={() => this.handleMove('/')}>#top</MenuItem>
+          {names.map(name =>
+            <MenuItem onTouchTap={() => this.handleMove(`/categories/${name}`)} key={name}>{`#${name}`}</MenuItem>
+          )}
           <Divider />
           <MenuItem onTouchTap={() => this.handleMove('/about')}>About</MenuItem>
         </LeftNav>
@@ -39,8 +43,8 @@ class App extends Component {
   }
 }
 
-function select({ app }) {
-  return { app };
+function select({ app, categories }) {
+  return { app, categories };
 }
 
 export default connect(select)(App);
