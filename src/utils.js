@@ -7,3 +7,4 @@ export function categoryFromPath(path, defaultCategory = 'top') {
 }
 
 export const APP = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+export const BASE = APP ? 'http://menthas.com' : 'http://localhost:8001';

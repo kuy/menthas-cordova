@@ -2,10 +2,7 @@ import { take, put, call, fork, select } from 'redux-saga/effects';
 import fetch from 'isomorphic-fetch';
 import { LOCATION_CHANGE } from 'react-router-redux';
 import * as actions from './actions';
-import { categoryFromPath } from './utils';
-
-const BASE = 'http://menthas.com';
-// const BASE = 'http://localhost:8001';
+import { BASE, categoryFromPath } from './utils';
 
 function api(url) {
   return fetch(BASE + url)
@@ -35,12 +32,6 @@ function* fetchNews(name) {
   yield put(actions.successFetchNews({ name, data }));
 }
 
-function* startup() {
-  const selected = yield select(state => state.app.selected);
-  yield fork(fetchCategory, selected);
-  yield fork(fetchNews, selected);
-}
-
 function* categoryChange() {
   while (true) {
     const { payload: { pathname } } = yield take(LOCATION_CHANGE);
@@ -62,6 +53,5 @@ function* categoryChange() {
 }
 
 export default function* root() {
-  // yield fork(startup);
   yield fork(categoryChange);
 };
